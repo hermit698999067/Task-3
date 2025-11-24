@@ -4,27 +4,21 @@ class Program
 {
     static void Main()
     {
-        Console.Write("Enter something: ");
-        string input = Console.ReadLine();
+        Console.Write("Введите символ: ");
+        char c = Console.ReadKey().KeyChar;
+        Console.WriteLine();
 
-        if (int.TryParse(input, out int intValue))
+        if (char.IsLetter(c))
         {
-            Console.WriteLine("This is an int.");
-            return;
+            Console.WriteLine($"'{c}' — это буква");
         }
-
-        if (double.TryParse(input, out double doubleValue))
+        else if (char.IsDigit(c))
         {
-            Console.WriteLine("This is a double.");
-            return;
+            Console.WriteLine($"'{c}' — это цифра");
         }
-
-        if (bool.TryParse(input, out bool boolValue))
+        else
         {
-            Console.WriteLine("This is a bool.");
-            return;
+            Console.WriteLine($"'{c}' — это другой символ");
         }
-
-        Console.WriteLine("This is a string.");
     }
 }

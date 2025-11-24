@@ -1,27 +1,32 @@
 ﻿using System;
-using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        DateTime now = DateTime.Now;
-        double number = 1234567.89;
+        int sum = 0;
+        int number = 0;
 
-        string[] cultures = { "ru-RU", "en-US", "de-DE" };
+        Console.WriteLine("Введите числа (0 — завершить):");
 
-        foreach (var cultureName in cultures)
+        while (true)
         {
-            CultureInfo culture = new CultureInfo(cultureName);
+            Console.Write("Введите число: ");
+            string input = Console.ReadLine();
 
-            Console.WriteLine($"Culture: {cultureName}");
+            if (int.TryParse(input, out number))
+            {
+                if (number == 0) 
+                    break;
 
-            Console.WriteLine($"Date: {now.ToString(culture)}");
-
-            Console.WriteLine($"Number (N): {number.ToString("N", culture)}");
-            Console.WriteLine($"Number (C): {number.ToString("C", culture)}");
-
-            Console.WriteLine(new string('-', 30));
+                sum += number;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введите корректное число!");
+            }
         }
+
+        Console.WriteLine($"Сумма чисел = {sum}");
     }
 }

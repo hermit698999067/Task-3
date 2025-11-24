@@ -4,45 +4,67 @@ class Program
 {
     static void Main()
     {
-        string name;
-        do
-        {
-            Console.Write("Enter your name: ");
-            name = Console.ReadLine();
-        } while (string.IsNullOrWhiteSpace(name));
+        bool continueCalc = true;
 
-        int age;
-        while (true)
+        while (continueCalc)
         {
-            Console.Write("Enter your age (0-120): ");
-            string input = Console.ReadLine();
-            if (int.TryParse(input, out age) && age >= 0 && age <= 120)
-                break;
-            Console.WriteLine("Invalid age. Please try again.");
+            try
+            {
+                Console.Write("Введите первое число: ");
+                double a = double.Parse(Console.ReadLine());
+
+                Console.Write("Введите второе число: ");
+                double b = double.Parse(Console.ReadLine());
+
+                Console.Write("Введите оператор (+, -, *, /): ");
+                string opirationCalc = Console.ReadLine();
+
+                double result;
+
+                switch (opirationCalc)
+                {
+                    case "+":
+                        result = a + b;
+                        Console.WriteLine($"{a} + {b} = {result}");
+                        break;
+
+                    case "-":
+                        result = a - b;
+                        Console.WriteLine($"{a} - {b} = {result}");
+                        break;
+
+                    case "*":
+                        result = a * b;
+                        Console.WriteLine($"{a} * {b} = {result}");
+                        break;
+
+                    case "/":
+                        if (b == 0)
+                            throw new DivideByZeroException();
+                        result = a / b;
+                        Console.WriteLine($"{a} / {b} = {result}");
+                        break;
+
+                    default:
+                        Console.WriteLine("Недопустимый оператор!");
+                        break;
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Ошибка: введено не число!");
+            }
+            catch (DivideByZeroException)
+            {
+                Console.WriteLine("Ошибка: деление на ноль невозможно!");
+            }
+
+            Console.Write("Хотите продолжить? (y/n): ");
+            string answer = Console.ReadLine();
+            if (answer.ToLower() != "y")
+                continueCalc = false;
         }
 
-        double height;
-        while (true)
-        {
-            Console.Write("Enter your height in meters: ");
-            string input = Console.ReadLine();
-            if (double.TryParse(input, out height) && height > 0)
-                break;
-            Console.WriteLine("Invalid height. Please try again.");
-        }
-
-        decimal salary;
-        while (true)
-        {
-            Console.Write("Enter your salary: ");
-            string input = Console.ReadLine();
-            if (decimal.TryParse(input, out salary) && salary > 0)
-                break;
-            Console.WriteLine("Invalid salary. Please try again.");
-        }
-
-        Console.WriteLine("\nUser Summary:");
-        Console.WriteLine("{0,-10} {1,6} {2,8} {3,12}", "Name", "Age", "Height", "Salary");
-        Console.WriteLine("{0,-10} {1,6} {2,8:N2} {3,12:C}", name, age, height, salary);
+        Console.WriteLine("Программа завершена.");
     }
 }

@@ -4,23 +4,13 @@ class Program
 {
     static void Main()
     {
-        string? nickname = null;
-
-        Console.Write("Enter your nickname (or leave empty): ");
-        string input = Console.ReadLine();
-        
-        if (string.IsNullOrWhiteSpace(input))
-            nickname = null;
-        else
-            nickname = input;
-
-        int length = GetNicknameLength(nickname);
-
-        Console.WriteLine($"Nickname length: {length}");
-    }
-
-    static int GetNicknameLength(string? nickname)
-    {
-        return nickname?.Length ?? 0;
+        for (int i = 1; i <= 10; i++)
+        {
+            for (int j = 1; j <= 10; j++)
+            {
+                Console.Write($"{i * j,4}");
+            }
+            Console.WriteLine();
+        }
     }
 }

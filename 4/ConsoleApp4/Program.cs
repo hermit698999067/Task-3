@@ -4,19 +4,36 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("{0,-8} {1,6}", "Name", "Count");
+        int fizzCount = 0;
+        int buzzCount = 0;
+        int fizzBuzzCount = 0;
 
-        string item1 = "Orange";
-        int count1 = 12000;
+        for (int i = 1; i <= 100; i++)
+        {
+            if (i % 15 == 0) 
+            {
+                Console.WriteLine("FizzBuzz");
+                fizzBuzzCount++;
+            }
+            else if (i % 3 == 0)
+            {
+                Console.WriteLine("Fizz");
+                fizzCount++;
+            }
+            else if (i % 5 == 0)
+            {
+                Console.WriteLine("Buzz");
+                buzzCount++;
+            }
+            else
+            {
+                Console.WriteLine(i);
+            }
+        }
 
-        string item2 = "Bananas";
-        int count2 = 340;
-
-        string item3 = "Awakado";
-        int count3 = 450000;
-
-        Console.WriteLine("{0,-8} {1,6:N0}", item1, count1);
-        Console.WriteLine("{0,-8} {1,6:N0}", item2, count2);
-        Console.WriteLine("{0,-8} {1,6:N0}", item3, count3);
+        Console.WriteLine();
+        Console.WriteLine($"Слово 'Fizz' встречается: {fizzCount} раз");
+        Console.WriteLine($"Слово 'Buzz' встречается: {buzzCount} раз");
+        Console.WriteLine($"Слово 'FizzBuzz' встречается: {fizzBuzzCount} раз");
     }
 }

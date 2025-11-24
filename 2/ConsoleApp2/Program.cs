@@ -4,15 +4,17 @@ class Program
 {
     static void Main()
     {
-        object height = 1.88;      
-        object name = "Artyom";    
+        Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
 
-        double realHeight = (double)height;
-        string realName = (string)name;
+        int sum = 0;
 
-        int nameLength = realName.Length;
+        for (int i = 1; i <= N; i++)
+        {
+            Console.WriteLine(i);
+            sum += i;
+        }
 
-        Console.WriteLine($"Height: {realHeight}");
-        Console.WriteLine($"Name length: {nameLength}");
+        Console.WriteLine($"Сумма = {sum}");
     }
 }

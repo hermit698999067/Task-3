@@ -1,55 +1,104 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
 
 class Program
 {
-    static void Main(string[] args)
+    class Record
     {
-        // Значения по умолчанию
-        string name = "User";
-        decimal sum = 1000m;
-        string currencyCode = "USD";
-        string cultureCode = "en-US";
+        public string Name;
+        public int Age;
+        public int Score;
+    }
 
-        // Разбор аргументов командной строки
-        for (int i = 0; i < args.Length; i++)
+    static void Main()
+    {
+        List<Record> validRecords = new List<Record>();
+        List<string> errors = new List<string>();
+
+        int lineNumber = 1;
+
+        Console.WriteLine("Введите данные в формате: Имя,Возраст,Баллы");
+        Console.WriteLine("Для завершения ввода оставьте строку пустой.");
+
+        while (true)
         {
-            switch (args[i])
+            Console.Write($"Строка {lineNumber}: ");
+            string input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+                break;
+
+            string[] parts = input.Split(',');
+
+            if (parts.Length != 3)
             {
-                case "--name":
-                    if (i + 1 < args.Length && !string.IsNullOrWhiteSpace(args[i + 1]))
-                        name = args[i + 1];
-                    i++;
-                    break;
-                case "--sum":
-                    if (i + 1 < args.Length && decimal.TryParse(args[i + 1], out decimal parsedSum))
-                        sum = parsedSum;
-                    i++;
-                    break;
-                case "--currency":
-                    if (i + 1 < args.Length && !string.IsNullOrWhiteSpace(args[i + 1]))
-                        currencyCode = args[i + 1].ToUpper();
-                    i++;
-                    break;
+                errors.Add($"Строка {lineNumber}: неверное количество элементов");
+                lineNumber++;
+                continue;
+            }
+
+            string name = parts[0].Trim();
+            bool ageOk = int.TryParse(parts[1].Trim(), out int age);
+            bool scoreOk = int.TryParse(parts[2].Trim(), out int score);
+
+            if (!ageOk)
+            {
+                errors.Add($"Строка {lineNumber}: неверный возраст");
+            }
+            else if (age < 0 || age > 120)
+            {
+                errors.Add($"Строка {lineNumber}: возраст вне диапазона 0–120");
+            }
+
+            if (!scoreOk)
+            {
+                errors.Add($"Строка {lineNumber}: неверные баллы");
+            }
+            else if (score < 0 || score > 100)
+            {
+                errors.Add($"Строка {lineNumber}: баллы вне диапазона 0–100");
+            }
+
+            if (ageOk && scoreOk && age >= 0 && age <= 120 && score >= 0 && score <= 100)
+            {
+                validRecords.Add(new Record { Name = name, Age = age, Score = score });
+            }
+
+            lineNumber++;
+        }
+
+        Console.WriteLine("\nРезультаты:");
+
+        if (validRecords.Count > 0)
+        {
+            double avgAge = 0;
+            double avgScore = 0;
+
+            foreach (var rec in validRecords)
+            {
+                avgAge += rec.Age;
+                avgScore += rec.Score;
+            }
+
+            avgAge /= validRecords.Count;
+            avgScore /= validRecords.Count;
+
+            Console.WriteLine($"Количество валидных записей: {validRecords.Count}");
+            Console.WriteLine($"Средний возраст: {avgAge:F2}");
+            Console.WriteLine($"Средние баллы: {avgScore:F2}");
+        }
+        else
+        {
+            Console.WriteLine("Нет валидных записей.");
+        }
+
+        if (errors.Count > 0)
+        {
+            Console.WriteLine("\nОшибки:");
+            foreach (string err in errors)
+            {
+                Console.WriteLine(err);
             }
         }
-
-        // Определяем культуру для валюты
-        CultureInfo culture;
-        try
-        {
-            culture = new CultureInfo(cultureCode);
-        }
-        catch
-        {
-            culture = CultureInfo.InvariantCulture;
-        }
-
-        // Создаём формат валюты
-        NumberFormatInfo nfi = (NumberFormatInfo)culture.NumberFormat.Clone();
-        nfi.CurrencySymbol = currencyCode;
-
-        // Вывод с интерполяцией строк
-        Console.WriteLine($"Hello {name}, your sum is {sum.ToString("C", nfi)}");
     }
 }
