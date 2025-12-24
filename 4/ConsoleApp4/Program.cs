@@ -1,39 +1,29 @@
 ﻿using System;
 
+class Student
+{
+    public string Name { get; set; }
+    public int Course { get; set; }
+
+    public Student(string name, int course)
+    {
+        Name = name;
+        Course = course;
+    }
+
+    public void PrintInfo()
+    {
+        Console.WriteLine("Имя студента: " + Name);
+        Console.WriteLine("Курс: " + Course);
+    }
+}
+
 class Program
 {
     static void Main()
     {
-        int fizzCount = 0;
-        int buzzCount = 0;
-        int fizzBuzzCount = 0;
+        Student student = new Student("Аликсей Артёмович", 3);
 
-        for (int i = 1; i <= 100; i++)
-        {
-            if (i % 15 == 0) 
-            {
-                Console.WriteLine("FizzBuzz");
-                fizzBuzzCount++;
-            }
-            else if (i % 3 == 0)
-            {
-                Console.WriteLine("Fizz");
-                fizzCount++;
-            }
-            else if (i % 5 == 0)
-            {
-                Console.WriteLine("Buzz");
-                buzzCount++;
-            }
-            else
-            {
-                Console.WriteLine(i);
-            }
-        }
-
-        Console.WriteLine();
-        Console.WriteLine($"Слово 'Fizz' встречается: {fizzCount} раз");
-        Console.WriteLine($"Слово 'Buzz' встречается: {buzzCount} раз");
-        Console.WriteLine($"Слово 'FizzBuzz' встречается: {fizzBuzzCount} раз");
+        student.PrintInfo();
     }
 }

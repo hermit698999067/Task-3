@@ -1,70 +1,70 @@
 ﻿using System;
+using System.Collections.Generic;
 
-class Program
+namespace MyApp
 {
-    static void Main()
+    enum StudyForm
     {
-        bool continueCalc = true;
+        FullTime,
+        PartTime
+    }
 
-        while (continueCalc)
+    class Student
+    {
+        public string Name { get; set; }
+        public int Course { get; set; }
+        public StudyForm Form { get; set; }
+
+        public Student(string name, int course, StudyForm form)
         {
-            try
-            {
-                Console.Write("Введите первое число: ");
-                double a = double.Parse(Console.ReadLine());
-
-                Console.Write("Введите второе число: ");
-                double b = double.Parse(Console.ReadLine());
-
-                Console.Write("Введите оператор (+, -, *, /): ");
-                string opirationCalc = Console.ReadLine();
-
-                double result;
-
-                switch (opirationCalc)
-                {
-                    case "+":
-                        result = a + b;
-                        Console.WriteLine($"{a} + {b} = {result}");
-                        break;
-
-                    case "-":
-                        result = a - b;
-                        Console.WriteLine($"{a} - {b} = {result}");
-                        break;
-
-                    case "*":
-                        result = a * b;
-                        Console.WriteLine($"{a} * {b} = {result}");
-                        break;
-
-                    case "/":
-                        if (b == 0)
-                            throw new DivideByZeroException();
-                        result = a / b;
-                        Console.WriteLine($"{a} / {b} = {result}");
-                        break;
-
-                    default:
-                        Console.WriteLine("Недопустимый оператор!");
-                        break;
-                }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Ошибка: введено не число!");
-            }
-            catch (DivideByZeroException)
-            {
-                Console.WriteLine("Ошибка: деление на ноль невозможно!");
-            }
-
-            Console.Write("Хотите продолжить? (y/n): ");
-            string answer = Console.ReadLine();
-            if (answer.ToLower() != "y")
-                continueCalc = false;
+            Name = name;
+            Course = course;
+            Form = form;
         }
 
-        Console.WriteLine("Программа завершена.");
+        public void PrintInfo()
+        {
+            Console.WriteLine($"{Name}, курс {Course}, форма: {Form}");
+        }
+    }
+
+    class Group
+    {
+        public string Name { get; set; }
+        public List<Student> Students { get; set; }
+
+        public Group(string name)
+        {
+            Name = name;
+            Students = new List<Student>();
+        }
+
+        public void AddStudent(Student s)
+        {
+            Students.Add(s);
+        }
+
+        public void PrintAllStudents()
+        {
+            Console.WriteLine("Группа: " + Name);
+
+            foreach (Student s in Students)
+            {
+                s.PrintInfo();
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Group group = new Group("ПМ-307");
+
+            group.AddStudent(new Student("Амир", 1, StudyForm.FullTime));
+            group.AddStudent(new Student("Алишер", 2, StudyForm.PartTime));
+
+            group.PrintAllStudents();
+        }
     }
 }

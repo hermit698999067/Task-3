@@ -1,15 +1,21 @@
 ﻿using System;
 
+class Student
+{
+    public string Name;
+    public int Course;
+}
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Введите число: ");
-        int n = int.Parse(Console.ReadLine());
+        Student student = new Student();
 
-        if (n % 2 == 0)
-            Console.WriteLine($"{n} — чётное число");
-        else
-            Console.WriteLine($"{n} — нечётное число");
+        student.Name = "Аликсей Артёмович";
+        student.Course = 2;
+
+        Console.WriteLine("Имя студента: " + student.Name);
+        Console.WriteLine("Курс: " + student.Course);
     }
 }

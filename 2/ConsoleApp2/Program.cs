@@ -1,20 +1,21 @@
 ﻿using System;
 
+class Student
+{
+    public string Name { get; set; }
+    public int Course { get; set; }
+}
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Введите число N: ");
-        int N = int.Parse(Console.ReadLine());
+        Student student = new Student();
 
-        int sum = 0;
+        student.Name = "Аликсей Артёмович";
+        student.Course = 3;
 
-        for (int i = 1; i <= N; i++)
-        {
-            Console.WriteLine(i);
-            sum += i;
-        }
-
-        Console.WriteLine($"Сумма = {sum}");
+        Console.WriteLine("Имя студента: " + student.Name);
+        Console.WriteLine("Курс: " + student.Course);
     }
 }
